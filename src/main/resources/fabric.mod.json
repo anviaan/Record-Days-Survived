@@ -3,13 +3,13 @@
   "id": "record_days_survived",
   "version": "${version}",
   "name": "Record Days Survived",
-  "description": "",
+  "description": "This Minecraft mod challenges you to keep track of how many days you survive without dying - can you reach a record number of days alive before falling to the dangers of the world?",
   "authors": [
     "anvian"
   ],
   "contact": {},
   "license": "GPL-3.0",
-  "icon": "assets/record_days_survived/icon.png",
+  "icon": "assets/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
