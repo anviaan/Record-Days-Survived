@@ -3,7 +3,7 @@ package net.anvian.record_days_survived.util;
 import net.minecraft.nbt.NbtCompound;
 
 public class DaysData {
-    public static int setDays(IEntityDataSaver player, int amount) {
+    public static int addDays(IEntityDataSaver player, int amount) {
         NbtCompound nbt = player.getPersistentData();
         int days = nbt.getInt("days");
         days += amount;
@@ -20,7 +20,7 @@ public class DaysData {
         return days;
     }
 
-    public static int setTicksPassed(IEntityDataSaver player) {
+    public static int addTicksPassed(IEntityDataSaver player) {
         NbtCompound nbt = player.getPersistentData();
         int setTicksPassed = nbt.getInt("ticksPassed");
         setTicksPassed += 1200;

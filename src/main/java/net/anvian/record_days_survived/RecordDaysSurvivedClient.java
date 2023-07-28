@@ -4,7 +4,6 @@ import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -26,9 +25,9 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
 //                    System.out.println(((IEntityDataSaver) player).getPersistentData().getLong("ticksPassed"));
 //                }
 
-                if (worldTime % 200 == 0) {
-                    DaysData.setDays((IEntityDataSaver)player, 1);
-                    DaysData.setTicksPassed((IEntityDataSaver)player);
+                if (worldTime % TICKS_PER_DAY == 0) {
+                    DaysData.addDays((IEntityDataSaver)player, 1);
+                    DaysData.addTicksPassed((IEntityDataSaver)player);
 
                     days = ((IEntityDataSaver) player).getPersistentData().getInt("days");
                     recordDay = ((IEntityDataSaver) player).getPersistentData().getInt("recordDay");
