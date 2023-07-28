@@ -1,7 +1,6 @@
 package net.anvian.record_days_survived.util;
 
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 public class DaysData {
     public static int addDays(IEntityDataSaver player, int amount) {
@@ -39,12 +38,16 @@ public class DaysData {
         return setRecordDay;
     }
 
-    public static void setPersistentData(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer) {
-        NbtCompound oldNbt = ((IEntityDataSaver) oldPlayer).getPersistentData();
-        NbtCompound newNbt = ((IEntityDataSaver) newPlayer).getPersistentData();
+    public static void dayPassed(IEntityDataSaver player) {
+        int days, recordDay;
+        DaysData.addDays(player, 1);
+        DaysData.addTicksPassed(player);
 
-        //newNbt.putInt("days", oldNbt.getInt("days"));
-        newNbt.putInt("recordDay", oldNbt.getInt("recordDay"));
-        //newNbt.putInt("ticksPassed", oldNbt.getInt("ticksPassed"));
+        days = (player).getPersistentData().getInt("days");
+        recordDay = (player).getPersistentData().getInt("recordDay");
+
+        if (days > recordDay ) {
+            DaysData.setRecordDay(player, days);
+        }
     }
 }
