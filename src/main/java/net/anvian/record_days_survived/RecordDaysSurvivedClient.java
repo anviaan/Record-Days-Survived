@@ -4,6 +4,7 @@ import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -42,6 +43,10 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
                 }
             }
         }));
+
+        ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+            DaysData.setPersistentData(oldPlayer, newPlayer);
+        });
 
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             if (entity instanceof ServerPlayerEntity) {
