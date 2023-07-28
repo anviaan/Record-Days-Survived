@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "record_days_survived",
+  "version": "${version}",
+  "name": "Record Days Survived",
+  "description": "",
+  "authors": [
+    "anvian"
+  ],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/record_days_survived/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.anvian.record_days_survived.RecordDaysSurvivedClient"
+    ],
+    "main": [
+      "net.anvian.record_days_survived.RecordDaysSurvived"
+    ]
+  },
+  "mixins": [
+    "record_days_survived.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
