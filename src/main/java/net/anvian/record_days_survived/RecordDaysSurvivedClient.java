@@ -3,6 +3,7 @@ package net.anvian.record_days_survived;
 import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -43,10 +44,11 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
             }
         }));
 
-        ServerPlayerEvents.ALLOW_DEATH.register((player, damageSource, damageAmount) -> {
-            DaysData.resetDays((IEntityDataSaver)player);
-            System.out.println(((IEntityDataSaver) player).getPersistentData().getInt("recordDay"));
-            return true;
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
+            if (entity instanceof ServerPlayerEntity) {
+                DaysData.resetDays((IEntityDataSaver)entity);
+                System.out.println(((IEntityDataSaver) entity).getPersistentData().getInt("recordDay"));
+            }
         });
 
     }
