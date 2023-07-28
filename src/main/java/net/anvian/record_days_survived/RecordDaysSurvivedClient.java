@@ -3,12 +3,15 @@ package net.anvian.record_days_survived;
 import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
 public class RecordDaysSurvivedClient implements ClientModInitializer {
     private static final int TICKS_PER_DAY = 24000;
@@ -16,8 +19,27 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        ServerTickEvents.START_SERVER_TICK.register((server->{
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+            dispatcher.register(ClientCommandManager.literal("record_day").executes(context -> {
+                IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
 
+                context.getSource().sendFeedback(Text.literal("Days: " + player.getPersistentData().getInt("days")));
+                context.getSource().sendFeedback(Text.literal("Record Day: " + player.getPersistentData().getInt("recordDay")));
+                //context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")));
+
+                return 0;
+            }));
+        });
+
+        ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+            IEntityDataSaver player = (IEntityDataSaver) newPlayer;
+
+            //newPlayer.sendMessage(Text.literal("Days: " + player.getPersistentData().getInt("days")));
+            newPlayer.sendMessage(Text.literal("Record Day: " + player.getPersistentData().getInt("recordDay")));
+            //newPlayer.sendMessage(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")));
+        });
+
+        ServerTickEvents.START_SERVER_TICK.register((server->{
             long worldTime = server.getOverworld().getTime();
 
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
@@ -25,14 +47,12 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
                 //one minute has passed
                 if (worldTime % 1200 == 0) {
                     DaysData.addTicksPassed((IEntityDataSaver)player);
-                    System.out.println(log((IEntityDataSaver) player));
                     ticksPassed = ((IEntityDataSaver)player).getPersistentData().getLong("ticksPassed");
                 }
 
+                //one day has passed
                 if (ticksPassed % TICKS_PER_DAY == 0) {
                     DaysData.dayPassed((IEntityDataSaver)player);
-
-                    System.out.println(log((IEntityDataSaver) player));
                 }
             }
         }));
@@ -40,7 +60,13 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
         EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
             if (entity instanceof ServerPlayerEntity) {
                 DaysData.dayPassed((IEntityDataSaver)entity);
-                System.out.println(log((IEntityDataSaver) entity));
+                DaysData.resetTicksPassed((IEntityDataSaver)entity);
+            }
+        });
+
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
+            if (entity instanceof ServerPlayerEntity) {
+                DaysData.resetDays((IEntityDataSaver)entity);
             }
         });
 
@@ -51,18 +77,5 @@ public class RecordDaysSurvivedClient implements ClientModInitializer {
             newNbt.putInt("recordDay", oldNbt.getInt("recordDay"));
         });
 
-        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
-            if (entity instanceof ServerPlayerEntity) {
-                DaysData.resetDays((IEntityDataSaver)entity);
-                System.out.println(log((IEntityDataSaver) entity));
-            }
-        });
-
-    }
-    public static String log(IEntityDataSaver entity){
-        System.out.println(entity.getPersistentData().getInt("days") + " days");
-        System.out.println(entity.getPersistentData().getInt("recordDay") + " record day");
-        System.out.println(entity.getPersistentData().getInt("ticksPassed") + " ticks passed");
-        return null;
     }
 }

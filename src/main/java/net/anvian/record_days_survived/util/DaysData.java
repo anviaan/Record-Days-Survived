@@ -29,6 +29,17 @@ public class DaysData {
         // sync the data
         return setTicksPassed;
     }
+
+    public static int resetTicksPassed(IEntityDataSaver player) {
+        NbtCompound nbt = player.getPersistentData();
+        int setTicksPassed = nbt.getInt("ticksPassed");
+        setTicksPassed = 0;
+
+        nbt.putInt("ticksPassed", setTicksPassed);
+        // sync the data
+        return setTicksPassed;
+    }
+
     public static int setRecordDay(IEntityDataSaver player, int amount) {
         NbtCompound nbt = player.getPersistentData();
         int setRecordDay = nbt.getInt("recordDay");
