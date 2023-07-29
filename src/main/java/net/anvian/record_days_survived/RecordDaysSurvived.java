@@ -5,11 +5,13 @@ import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
@@ -18,17 +20,16 @@ public class RecordDaysSurvived implements ModInitializer {
     private static long ticksPassed = 1200;
     @Override
     public void onInitialize() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-            dispatcher.register(ClientCommandManager.literal("record_day").executes(context -> {
-                IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+                dispatcher.register(CommandManager.literal("record_day").executes(context -> {
+                    IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
 
-                context.getSource().sendFeedback(Text.literal("Days: " + player.getPersistentData().getInt("days")));
-                context.getSource().sendFeedback(Text.literal("Record Day: " + player.getPersistentData().getInt("recordDay")));
-                //context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")));
+                    context.getSource().sendFeedback(Text.literal("Days: " + player.getPersistentData().getInt("days")), false);
+                    context.getSource().sendFeedback(Text.literal("Record Day: " + player.getPersistentData().getInt("recordDay")), false);
+                    //context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")), false);
 
-                return 0;
-            }));
-        });
+                    return 1;
+                })));
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             IEntityDataSaver player = (IEntityDataSaver) newPlayer;
