@@ -12,9 +12,6 @@
   "icon": "assets/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": [
-      "net.anvian.record_days_survived.RecordDaysSurvivedClient"
-    ],
     "main": [
       "net.anvian.record_days_survived.RecordDaysSurvived"
     ]
