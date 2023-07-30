@@ -61,12 +61,13 @@ public class DaysData {
         days = (player).getPersistentData().getInt("days");
         recordDay = (player).getPersistentData().getInt("recordDay");
 
+        if (days == 5 || days % 10 == 0){
+            entity.sendMessage(Text.literal("New Record! " + days + " days survived!")
+                    .fillStyle(Style.EMPTY.withBold(true).withColor(Formatting.YELLOW)));
+        }
+
         if (days > recordDay ) {
             DaysData.setRecordDay(player, days);
-            if (days == 5 || days % 10 == 0){
-                entity.sendMessage(Text.literal("New Record! " + days + " days survived!")
-                        .fillStyle(Style.EMPTY.withBold(true).withColor(Formatting.YELLOW)));
-            }
         }
     }
 }
