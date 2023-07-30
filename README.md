@@ -5,6 +5,6 @@ Upon installing this mod, the day counter will be activated automatically upon e
 
 However, you must not let your guard down, as a single mistake or a bad choice could result in your death. Don't worry, though, if that happens, you won't lose all your progress. On the contrary, upon dying, the mod will display a message showing your record of days lived before the fateful event, encouraging you to surpass yourself and reach new survival milestones.
 
-Furthermore, with the command `record_day`, you can see how many days have elapsed and what your record is for surviving days.
+Furthermore, with the command `record_report`, you can see how many days have elapsed and what your record is for surviving days.
 
 Get ready to live a unique and thrilling experience with 'Record Days Survived.' Do you have what it takes to face the days and become a master of survival? Prove it and start your adventure right now!
