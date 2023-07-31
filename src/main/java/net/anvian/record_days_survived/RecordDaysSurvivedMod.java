@@ -19,6 +19,8 @@ import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.Supplier;
+
 public class RecordDaysSurvivedMod implements ModInitializer {
 	public static final String MOD_ID = "record_days_survived";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -39,9 +41,11 @@ public class RecordDaysSurvivedMod implements ModInitializer {
                     assert player != null;
 					int days = player.getPersistentData().getInt("days");
 					int recordDay = player.getPersistentData().getInt("recordDay");
+					Supplier<Text> daysText = () -> Text.of(I18n.translate("report_day", days));
+					Supplier<Text> recordText = () -> Text.of(I18n.translate("report_record_day", recordDay));
 
-                    context.getSource().sendFeedback(Text.of(I18n.translate("report_day", days)), false);
-					context.getSource().sendFeedback(Text.of(I18n.translate("report_record_day", recordDay)), false);
+                    context.getSource().sendFeedback(daysText, false);
+					context.getSource().sendFeedback(recordText, false);
 					//context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")), false);
 
 					return 1;
