@@ -1,0 +1,6 @@
+{
+  "title_report" : "Reporte de días sobrevividos:",
+  "report_day" : "Día: %d",
+  "report_record_day" : "Record de días: %d",
+  "reset" : "Tus días fueron reiniciados"
+}
