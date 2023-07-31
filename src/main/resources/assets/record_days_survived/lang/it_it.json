@@ -2,5 +2,6 @@
     "title_report": "Rapporto sui giorni sopravvissuti:",
     "report_day": "Giorno: %d",
     "report_record_day": "Giorno del record: %d",
-    "reset": "I tuoi giorni sono ripristinati"
+    "reset": "I tuoi giorni sono ripristinati",
+    "record_notice": "§eNuovo record! i giorni sono sopravvissuti %d"
 }

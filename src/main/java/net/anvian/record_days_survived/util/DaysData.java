@@ -1,10 +1,9 @@
 package net.anvian.record_days_survived.util;
 
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 
 public class DaysData {
     public static int addDays(IEntityDataSaver player, int amount) {
@@ -62,8 +61,7 @@ public class DaysData {
         recordDay = (player).getPersistentData().getInt("recordDay");
 
         if (days == 5 || days % 10 == 0){
-            entity.sendMessage(Text.literal("New Record! " + days + " days survived!")
-                    .fillStyle(Style.EMPTY.withBold(true).withColor(Formatting.YELLOW)));
+            entity.sendMessage(Text.of(I18n.translate("record_notice", days)));
         }
 
         if (days > recordDay ) {

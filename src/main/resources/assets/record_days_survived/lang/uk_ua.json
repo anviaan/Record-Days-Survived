@@ -1,6 +1,7 @@
 {
     "title_report": "Вижили Дні доповіді:",
     "report_day": "День: %d",
-    "report_record_day": "Записний день: %d",
-    "reset": "Ваші дні скидаються"
+    "report_record_day": "День запису: %d",
+    "reset": "Ваші дні скидаються",
+    "record_notice": "§eНовий запис! Вижили дні %d"
 }

@@ -1,6 +1,7 @@
 {
     "title_report": "살아남은 날 보고서 :",
-    "report_day": "날 : %d",
-    "report_record_day": "기록적인 날 : %d",
-    "reset": "당신의 날이 재설정됩니다"
+    "report_day": "낮: %d",
+    "report_record_day": "기록적인 날: %d",
+    "reset": "당신의 날이 재설정됩니다",
+    "record_notice": "§e새로운 기록! 날이 살아 남았습니다 %d"
 }

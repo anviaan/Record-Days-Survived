@@ -2,5 +2,6 @@
   "title_report" : "Survived days report:",
   "report_day" : "Day: %d",
   "report_record_day" : "Record day: %d",
-  "reset" : "Your days are reset"
+  "reset" : "Your days are reset",
+  "record_notice" : "§eNew record! days survived %d"
 }

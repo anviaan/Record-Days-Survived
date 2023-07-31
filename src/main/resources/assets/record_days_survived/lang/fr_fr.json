@@ -2,5 +2,6 @@
     "title_report": "Rapport des jours survécu:",
     "report_day": "Jour: %d",
     "report_record_day": "Journée des records: %d",
-    "reset": "Vos journées sont réinitialisées"
+    "reset": "Vos journées sont réinitialisées",
+    "record_notice": "§eNouvel enregistrement! Les jours ont survécu %d"
 }

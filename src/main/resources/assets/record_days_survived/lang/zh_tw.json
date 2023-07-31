@@ -1,6 +1,7 @@
 {
     "title_report": "生存的日子報告：",
-    "report_day": "日：%d",
+    "report_day": "天：%d",
     "report_record_day": "記錄日：%d",
-    "reset": "您的日子是重置的"
+    "reset": "您的日子是重置的",
+    "record_notice": "§e新紀錄！ 日子倖存下來 %d"
 }

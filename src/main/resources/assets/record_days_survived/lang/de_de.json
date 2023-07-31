@@ -2,5 +2,6 @@
     "title_report": "Überlebte Tage Bericht:",
     "report_day": "Tag: %d",
     "report_record_day": "Rekordtag: %d",
-    "reset": "Ihre Tage werden zurückgesetzt"
+    "reset": "Ihre Tage werden zurückgesetzt",
+    "record_notice": "§eNeuer Eintrag! Tage überlebten %d"
 }
