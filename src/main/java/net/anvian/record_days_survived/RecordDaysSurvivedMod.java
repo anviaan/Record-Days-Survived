@@ -1,6 +1,5 @@
 package net.anvian.record_days_survived;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ModInitializer;
@@ -10,6 +9,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -34,11 +34,14 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 				dispatcher.register(CommandManager.literal(command).executes(context -> {
 					IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
 
-					context.getSource().sendMessage(Text.literal("Survived days report:").fillStyle(Style.EMPTY.withBold(true)));
+					context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
 
                     assert player != null;
-                    context.getSource().sendFeedback(Text.literal("Day: " + player.getPersistentData().getInt("days")), false);
-					context.getSource().sendFeedback(Text.literal("Record Day: " + player.getPersistentData().getInt("recordDay")), false);
+					int days = player.getPersistentData().getInt("days");
+					int recordDay = player.getPersistentData().getInt("recordDay");
+
+                    context.getSource().sendFeedback(Text.of(I18n.translate("report_day", days)), false);
+					context.getSource().sendFeedback(Text.of(I18n.translate("report_record_day", recordDay)), false);
 					//context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")), false);
 
 					return 1;
@@ -56,9 +59,11 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
 			IEntityDataSaver player = (IEntityDataSaver) newPlayer;
 
+			int recordDay = player.getPersistentData().getInt("recordDay");
+
 			//newPlayer.sendMessage(Text.literal("Days: " + player.getPersistentData().getInt("days")));
-			newPlayer.sendMessage(Text.literal("Your days are reset").fillStyle(Style.EMPTY.withBold(true)));
-			newPlayer.sendMessage(Text.literal("Record Day: " + player.getPersistentData().getInt("recordDay")));
+			newPlayer.sendMessage(Text.translatable("reset").fillStyle(Style.EMPTY.withBold(true)));
+			newPlayer.sendMessage(Text.of(I18n.translate("report_record_day", recordDay)));
 			//newPlayer.sendMessage(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")));
 		});
 
