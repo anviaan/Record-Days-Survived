@@ -1,11 +1,15 @@
 {
-	"required": true,
-	"package": "net.anvian.record_days_survived.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"DataSaverMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.anvian.record_days_survived.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "record_days_survived.refmap.json",
+  "mixins": [
+    "DataSaverMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

@@ -1,110 +1,139 @@
 package net.anvian.record_days_survived;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.logging.LogUtils;
 import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class RecordDaysSurvivedMod implements ModInitializer {
-	public static final String MOD_ID = "record_days_survived";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+@Mod(RecordDaysSurvivedMod.MODID)
+public class RecordDaysSurvivedMod {
+    //TODo no se esta guardando la informacion del jugador al salir del mundo
 
-	private static final long TICKS_PER_DAY = 24000;
-	private static long ticksPassed = 1200;
-	private static final String command = "record_report";
+    public static final String MODID = "record_days_survived";
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-	@Override
-	public void onInitialize() {
+    public static final String command = "record_report";
+    private static final long TICKS_PER_DAY = 24000;
+    private static long ticksPassed = 1200;
 
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-				dispatcher.register(CommandManager.literal(command).executes(context -> {
-					IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
 
-					context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
+    public RecordDaysSurvivedMod() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-                    assert player != null;
-					int days = player.getPersistentData().getInt("days");
-					int recordDay = player.getPersistentData().getInt("recordDay");
+        modEventBus.addListener(this::commonSetup);
 
-                    context.getSource().sendFeedback(Text.of(I18n.translate("report_day", days)), false);
-					context.getSource().sendFeedback(Text.of(I18n.translate("report_record_day", recordDay)), false);
-					//context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")), false);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
-					return 1;
-				})));
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        LOGGER.info("Record Days Survived mod initialized!");
+    }
 
-		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
-			if (entity instanceof ServerPlayerEntity) {
-				ServerCommandSource source = entity.getCommandSource().withEntity(entity);
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event){
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        dispatcher.register(Commands.literal(command).executes(context -> {
+            IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayerOrException();
 
-				entity.getServer().getCommandManager().executeWithPrefix(source, command);
+            context.getSource().sendSystemMessage(Component.translatable("title_report").withStyle(style -> style.withBold(true)));
 
-			}
-		});
+            int days = player.getPersistentData().getInt("days");
+            int recordDay = player.getPersistentData().getInt("recordDay");
 
-		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
-			IEntityDataSaver player = (IEntityDataSaver) newPlayer;
+            context.getSource().sendSystemMessage(Component.nullToEmpty(I18n.get("report_day", days)));
+            context.getSource().sendSystemMessage(Component.nullToEmpty(I18n.get("report_record_day", recordDay)));
 
-			int recordDay = player.getPersistentData().getInt("recordDay");
+            return 1;
+        }));
+    }
 
-			//newPlayer.sendMessage(Text.literal("Days: " + player.getPersistentData().getInt("days")));
-			newPlayer.sendMessage(Text.translatable("reset").fillStyle(Style.EMPTY.withBold(true)));
-			newPlayer.sendMessage(Text.of(I18n.translate("report_record_day", recordDay)));
-			//newPlayer.sendMessage(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")));
-		});
+    @SubscribeEvent
+    public void entityLoad(EntityJoinLevelEvent event){
+        Entity entity = event.getEntity();
+        if (entity instanceof ServerPlayer){
+            CommandSourceStack source = entity.createCommandSourceStack().withEntity(entity);
+            entity.getServer().getCommands().performPrefixedCommand(source, command);
+        }
+    }
 
-		ServerTickEvents.START_SERVER_TICK.register((server->{
-			long worldTime = server.getOverworld().getTime();
+    @SubscribeEvent
+    public void afterRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        IEntityDataSaver player = (IEntityDataSaver) event.getEntity();
+        int recordDay = player.getPersistentData().getInt("recordDay");
 
-			for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+        event.getEntity().sendSystemMessage(Component.translatable("reset").withStyle(style -> style.withBold(true)));
+        event.getEntity().sendSystemMessage(Component.nullToEmpty(I18n.get("report_record_day", recordDay)));
+    }
 
-				//one minute has passed
-				if (worldTime % 1200 == 0) {
-					DaysData.addTicksPassed((IEntityDataSaver)player);
-					ticksPassed = ((IEntityDataSaver)player).getPersistentData().getLong("ticksPassed");
-				}
+    @SubscribeEvent
+    public void startServerTick(TickEvent.ServerTickEvent event) {
+        MinecraftServer server = event.getServer();
+        long worldTime = server.overworld().dayTime();
 
-				//one day has passed
-				if (ticksPassed % TICKS_PER_DAY == 0) {
-					DaysData.dayPassed((IEntityDataSaver)player, player);
-				}
-			}
-		}));
+        if (event.phase == TickEvent.Phase.START) {
 
-		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
-			if (entity instanceof ServerPlayerEntity) {
-				DaysData.dayPassed((IEntityDataSaver)entity, entity);
-				DaysData.resetTicksPassed((IEntityDataSaver)entity);
-			}
-		});
+            for (ServerPlayer player : server.getPlayerList().getPlayers()){
 
-		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
-			if (entity instanceof ServerPlayerEntity) {
-				DaysData.resetDays((IEntityDataSaver)entity);
-			}
-		});
+                if(worldTime % 1200 == 0){
+                    DaysData.addTicksPassed((IEntityDataSaver) player);
+                    ticksPassed = ((IEntityDataSaver) player).getPersistentData().getLong("ticksPassed");
+                    System.out.println(ticksPassed);
+                }
 
-		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
-			NbtCompound oldNbt = ((IEntityDataSaver) oldPlayer).getPersistentData();
-			NbtCompound newNbt = ((IEntityDataSaver) newPlayer).getPersistentData();
+                //aca surge el error
+                if (ticksPassed % TICKS_PER_DAY == 0) {
+                    DaysData.dayPassed((IEntityDataSaver) player, player);
+                    System.out.println(player.getPersistentData().getInt("days"));
+                }
 
-			newNbt.putInt("recordDay", oldNbt.getInt("recordDay"));
-		});
+            }
+        }
+    }
 
-		LOGGER.info("Record Days Survived mod initialized!");
-	}
+    @SubscribeEvent
+    public void stopSleeping(PlayerWakeUpEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity instanceof  ServerPlayer){
+            DaysData.dayPassed((IEntityDataSaver) entity, entity);
+        }
+    }
+
+    @SubscribeEvent
+    public void afterDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer) {
+            DaysData.resetDays((IEntityDataSaver) event.getEntity());
+        }
+    }
+
+    @SubscribeEvent
+    public void copyFrom(PlayerEvent.Clone event){
+        if (event.isWasDeath()){
+            CompoundTag oldNbt = event.getOriginal().getPersistentData();
+            CompoundTag newNbt = event.getEntity().getPersistentData();
+
+            newNbt.putInt("recordDay", oldNbt.getInt("recordDay"));
+        }
+    }
 }

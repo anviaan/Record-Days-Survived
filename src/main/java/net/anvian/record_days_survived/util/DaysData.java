@@ -1,13 +1,13 @@
 package net.anvian.record_days_survived.util;
 
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
 
 public class DaysData {
     public static int addDays(IEntityDataSaver player, int amount) {
-        NbtCompound nbt = player.getPersistentData();
+        CompoundTag nbt = player.getPersistentData();
         int days = nbt.getInt("days");
         days += amount;
 
@@ -16,7 +16,7 @@ public class DaysData {
         return days;
     }
     public static int resetDays(IEntityDataSaver player) {
-        NbtCompound nbt = player.getPersistentData();
+        CompoundTag nbt = player.getPersistentData();
         int days = nbt.getInt("days");
         days = 0;
         nbt.putInt("days", days);
@@ -24,7 +24,7 @@ public class DaysData {
     }
 
     public static int addTicksPassed(IEntityDataSaver player) {
-        NbtCompound nbt = player.getPersistentData();
+        CompoundTag nbt = player.getPersistentData();
         int setTicksPassed = nbt.getInt("ticksPassed");
         setTicksPassed += 1200;
 
@@ -34,7 +34,7 @@ public class DaysData {
     }
 
     public static int resetTicksPassed(IEntityDataSaver player) {
-        NbtCompound nbt = player.getPersistentData();
+        CompoundTag nbt = player.getPersistentData();
         int setTicksPassed = nbt.getInt("ticksPassed");
         setTicksPassed = 0;
 
@@ -44,7 +44,7 @@ public class DaysData {
     }
 
     public static int setRecordDay(IEntityDataSaver player, int amount) {
-        NbtCompound nbt = player.getPersistentData();
+        CompoundTag nbt = player.getPersistentData();
         int setRecordDay = nbt.getInt("recordDay");
 
         nbt.putLong("recordDay", amount);
@@ -55,13 +55,13 @@ public class DaysData {
     public static void dayPassed(IEntityDataSaver player, LivingEntity entity) {
         int days, recordDay;
         DaysData.addDays(player, 1);
-        DaysData.addTicksPassed(player);
+        DaysData.resetTicksPassed(player);
 
         days = (player).getPersistentData().getInt("days");
         recordDay = (player).getPersistentData().getInt("recordDay");
 
         if (days == 5 || days % 10 == 0){
-            entity.sendMessage(Text.of(I18n.translate("record_notice", days)));
+            entity.sendSystemMessage(Component.nullToEmpty(I18n.get("record_notice", days)));
         }
 
         if (days > recordDay ) {
