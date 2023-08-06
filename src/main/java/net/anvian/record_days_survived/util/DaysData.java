@@ -23,12 +23,12 @@ public class DaysData {
         return days;
     }
 
-    public static int addTicksPassed(IEntityDataSaver player) {
+    public static long addTicksPassed(IEntityDataSaver player, long worldTime) {
         NbtCompound nbt = player.getPersistentData();
-        int setTicksPassed = nbt.getInt("ticksPassed");
+        long setTicksPassed = nbt.getInt("ticksPassed");
         setTicksPassed += 1200;
 
-        nbt.putInt("ticksPassed", setTicksPassed);
+        nbt.putLong("ticksPassed", setTicksPassed);
         // sync the data
         return setTicksPassed;
     }
@@ -36,7 +36,7 @@ public class DaysData {
     public static int resetTicksPassed(IEntityDataSaver player) {
         NbtCompound nbt = player.getPersistentData();
         int setTicksPassed = nbt.getInt("ticksPassed");
-        setTicksPassed = 0;
+        setTicksPassed = 1200;
 
         nbt.putInt("ticksPassed", setTicksPassed);
         // sync the data
@@ -55,7 +55,7 @@ public class DaysData {
     public static void dayPassed(IEntityDataSaver player, LivingEntity entity) {
         int days, recordDay;
         DaysData.addDays(player, 1);
-        DaysData.addTicksPassed(player);
+        DaysData.resetTicksPassed(player);
 
         days = (player).getPersistentData().getInt("days");
         recordDay = (player).getPersistentData().getInt("recordDay");
