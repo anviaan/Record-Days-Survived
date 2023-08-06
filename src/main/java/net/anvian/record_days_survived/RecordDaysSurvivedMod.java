@@ -78,13 +78,14 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
 				//one minute has passed
 				if (worldTime % 1200 == 0) {
-					DaysData.addTicksPassed((IEntityDataSaver)player);
+					DaysData.addTicksPassed((IEntityDataSaver)player, worldTime);
 					ticksPassed = ((IEntityDataSaver)player).getPersistentData().getLong("ticksPassed");
 				}
 
 				//one day has passed
 				if (ticksPassed % TICKS_PER_DAY == 0) {
 					DaysData.dayPassed((IEntityDataSaver)player, player);
+					ticksPassed = 1200;
 				}
 			}
 		}));
@@ -92,7 +93,6 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
 			if (entity instanceof ServerPlayerEntity) {
 				DaysData.dayPassed((IEntityDataSaver)entity, entity);
-				DaysData.resetTicksPassed((IEntityDataSaver)entity);
 			}
 		});
 
