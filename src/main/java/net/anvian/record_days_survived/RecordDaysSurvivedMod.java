@@ -29,8 +29,6 @@ import org.slf4j.Logger;
 
 @Mod(RecordDaysSurvivedMod.MODID)
 public class RecordDaysSurvivedMod {
-    //TODo no se esta guardando la informacion del jugador al salir del mundo
-
     public static final String MODID = "record_days_survived";
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -97,15 +95,14 @@ public class RecordDaysSurvivedMod {
             for (ServerPlayer player : server.getPlayerList().getPlayers()){
 
                 if(worldTime % 1200 == 0){
-                    DaysData.addTicksPassed((IEntityDataSaver) player);
+                    DaysData.addTicksPassed((IEntityDataSaver) player, worldTime);
                     ticksPassed = ((IEntityDataSaver) player).getPersistentData().getLong("ticksPassed");
-                    System.out.println(ticksPassed);
                 }
 
                 //aca surge el error
                 if (ticksPassed % TICKS_PER_DAY == 0) {
                     DaysData.dayPassed((IEntityDataSaver) player, player);
-                    System.out.println(player.getPersistentData().getInt("days"));
+                    ticksPassed = 1200;
                 }
 
             }
