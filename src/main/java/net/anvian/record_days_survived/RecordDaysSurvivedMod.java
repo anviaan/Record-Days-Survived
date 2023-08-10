@@ -42,7 +42,6 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
                     context.getSource().sendFeedback(Text.of(I18n.translate("report_day", days)), false);
 					context.getSource().sendFeedback(Text.of(I18n.translate("report_record_day", recordDay)), false);
-					//context.getSource().sendFeedback(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")), false);
 
 					return 1;
 				})));
@@ -61,10 +60,8 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
 			int recordDay = player.getPersistentData().getInt("recordDay");
 
-			//newPlayer.sendMessage(Text.literal("Days: " + player.getPersistentData().getInt("days")));
 			newPlayer.sendMessage(Text.translatable("reset").fillStyle(Style.EMPTY.withBold(true)));
 			newPlayer.sendMessage(Text.of(I18n.translate("report_record_day", recordDay)));
-			//newPlayer.sendMessage(Text.literal("Ticks Passed: " + player.getPersistentData().getInt("ticksPassed")));
 		});
 
 		ServerTickEvents.START_SERVER_TICK.register((server->{
