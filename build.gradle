@@ -20,7 +20,7 @@ mod_group_id = mod_version
 version = mod_version
 
 base {
-    archivesName = '(Forge)RecordDaySurvived-1.19.3-4'
+    archivesName = '(Forge)RecordDaySurvived-1.19'
 }
 
 java {
