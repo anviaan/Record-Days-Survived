@@ -1,5 +1,11 @@
 package net.anvian.record_days_survived;
 
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
+import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
+import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
+import net.anvian.record_days_survived.components.DayComponent;
 import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ModInitializer;
@@ -16,14 +22,16 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
-public class RecordDaysSurvivedMod implements ModInitializer {
+public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentInitializer {
 	public static final String MOD_ID = "record_days_survived";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final ComponentKey<DayComponent> DAY = ComponentRegistry.getOrCreate(new Identifier(MOD_ID, "days"), DayComponent.class);
 
 	private static final long TICKS_PER_DAY = 24000;
 	private static long ticksPassed = 1200;
@@ -39,13 +47,21 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 					context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
 
                     assert player != null;
-					int days = player.getPersistentData().getInt("days");
+					int days = DAY.get(context.getSource().getPlayer()).persistentData().getInt("days");
 					int recordDay = player.getPersistentData().getInt("recordDay");
 					Supplier<Text> daysText = () -> Text.of(I18n.translate("report_day", days));
 					Supplier<Text> recordText = () -> Text.of(I18n.translate("report_record_day", recordDay));
 
                     context.getSource().sendFeedback(daysText, false);
 					context.getSource().sendFeedback(recordText, false);
+
+					return 1;
+				})));
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+				dispatcher.register(CommandManager.literal("add_days").executes(context -> {
+					//IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
+
+					DAY.get(context.getSource().getPlayer()).persistentData().putInt("days", 100);
 
 					return 1;
 				})));
@@ -107,5 +123,10 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 		});
 
 		LOGGER.info("Record Days Survived mod initialized!");
+	}
+
+	@Override
+	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
+		registry.registerForPlayers(DAY, playerEntity -> new DayComponent(), RespawnCopyStrategy.LOSSLESS_ONLY);
 	}
 }

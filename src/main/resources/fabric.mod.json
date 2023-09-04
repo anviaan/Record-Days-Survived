@@ -31,5 +31,10 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom" : {
+		"cardinal-components": [
+			"record_days_survived:days"
+		]
 	}
 }
