@@ -6,15 +6,15 @@ public class DayComponent implements Mycomponents{
     private NbtCompound persistentData;
     @Override
     public void readFromNbt(NbtCompound tag) {
-        if (tag.contains("perfume.data", 10)) {
-            persistentData = tag.getCompound("perfume.data");
+        if (tag.contains("rds.data", 10)) {
+            persistentData = tag.getCompound("rds.data");
         }
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         if(persistentData != null) {
-            tag.put("perfume.data", persistentData);
+            tag.put("rds.data", persistentData);
         }
     }
 
