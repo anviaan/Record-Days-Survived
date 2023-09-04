@@ -4,5 +4,4 @@ import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.NbtCompound;
 
 public interface Mycomponents extends Component {
-    NbtCompound persistentData();
 }

@@ -3,26 +3,32 @@ package net.anvian.record_days_survived.components;
 import net.minecraft.nbt.NbtCompound;
 
 public class DayComponent implements Mycomponents{
-    private NbtCompound persistentData;
+    private int days;
+    private int recordDay;
+    private long ticksPassed;
     @Override
     public void readFromNbt(NbtCompound tag) {
-        if (tag.contains("rds.data", 10)) {
-            persistentData = tag.getCompound("rds.data");
-        }
+        days = tag.getInt("days");
+        recordDay = tag.getInt("recordDay");
+        ticksPassed = tag.getLong("ticksPassed");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        if(persistentData != null) {
-            tag.put("rds.data", persistentData);
-        }
+        tag.putInt("days", days);
+        tag.putInt("recordDay", recordDay);
+        tag.putLong("ticksPassed", ticksPassed);
     }
 
-    @Override
-    public NbtCompound persistentData() {
-        if (this.persistentData == null){
-            this.persistentData = new NbtCompound();
-        }
-        return persistentData;
+    public int getDays() {
+        return days;
+    }
+
+    public int getRecordDay() {
+        return recordDay;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
     }
 }

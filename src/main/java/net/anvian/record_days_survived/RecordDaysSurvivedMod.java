@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -42,26 +43,27 @@ public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentIni
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 				dispatcher.register(CommandManager.literal(command).executes(context -> {
-					IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
+					DAY.maybeGet(context.getSource().getPlayer()).ifPresent(dayComponent -> {
+						context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
 
-					context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
+						int days = dayComponent.getDays();
+						int recordDay = dayComponent.getRecordDay();
 
-                    assert player != null;
-					int days = DAY.get(context.getSource().getPlayer()).persistentData().getInt("days");
-					int recordDay = player.getPersistentData().getInt("recordDay");
-					Supplier<Text> daysText = () -> Text.of(I18n.translate("report_day", days));
-					Supplier<Text> recordText = () -> Text.of(I18n.translate("report_record_day", recordDay));
+						Supplier<Text> daysText = () -> Text.of(I18n.translate("report_day", days));
+						Supplier<Text> recordText = () -> Text.of(I18n.translate("report_record_day", recordDay));
 
-                    context.getSource().sendFeedback(daysText, false);
-					context.getSource().sendFeedback(recordText, false);
+						context.getSource().sendFeedback(daysText, false);
+						context.getSource().sendFeedback(recordText, false);
 
+					});
 					return 1;
 				})));
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 				dispatcher.register(CommandManager.literal("add_days").executes(context -> {
-					//IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
+					DAY.maybeGet(context.getSource().getPlayer()).ifPresent(dayComponent -> {
 
-					DAY.get(context.getSource().getPlayer()).persistentData().putInt("days", 100);
+						dayComponent.setDays(dayComponent.getDays() + 10);
+					});
 
 					return 1;
 				})));
