@@ -37,7 +37,9 @@
 	},
 	"custom" : {
 		"cardinal-components": [
-			"record_days_survived:days"
+			"record_days_survived:days",
+			"record_days_survived:record_day",
+			"record_days_survived:ticks_passed"
 		]
 	}
 }

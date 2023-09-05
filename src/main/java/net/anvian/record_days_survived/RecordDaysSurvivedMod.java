@@ -39,13 +39,13 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 						context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
 
 						int days = dayComponent.getDays();
-						int recordDay = dayComponent.getRecordDay();
+						//int recordDay = dayComponent.getRecordDay();
 
 						Supplier<Text> daysText = () -> Text.of(I18n.translate("report_day", days));
-						Supplier<Text> recordText = () -> Text.of(I18n.translate("report_record_day", recordDay));
+						//Supplier<Text> recordText = () -> Text.of(I18n.translate("report_record_day", recordDay));
 
 						context.getSource().sendFeedback(daysText, false);
-						context.getSource().sendFeedback(recordText, false);
+						//context.getSource().sendFeedback(recordText, false);
 
 					});
 					return 1;
