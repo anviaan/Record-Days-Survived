@@ -18,6 +18,9 @@
 	"entrypoints": {
 		"main": [
 			"net.anvian.record_days_survived.RecordDaysSurvivedMod"
+		],
+		"cardinal-components": [
+			"net.anvian.record_days_survived.components.ModComponents"
 		]
 	},
 	"mixins": [

@@ -1,11 +1,6 @@
 package net.anvian.record_days_survived;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
-import net.anvian.record_days_survived.components.DayComponent;
+import net.anvian.record_days_survived.components.ModComponents;
 import net.anvian.record_days_survived.util.DaysData;
 import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ModInitializer;
@@ -16,23 +11,20 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
-public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentInitializer {
+public class RecordDaysSurvivedMod implements ModInitializer {
 	public static final String MOD_ID = "record_days_survived";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static final ComponentKey<DayComponent> DAY = ComponentRegistry.getOrCreate(new Identifier(MOD_ID, "days"), DayComponent.class);
 
 	private static final long TICKS_PER_DAY = 24000;
 	private static long ticksPassed = 1200;
@@ -43,7 +35,7 @@ public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentIni
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 				dispatcher.register(CommandManager.literal(command).executes(context -> {
-					DAY.maybeGet(context.getSource().getPlayer()).ifPresent(dayComponent -> {
+					ModComponents.DAY.maybeGet(context.getSource().getPlayer()).ifPresent(dayComponent -> {
 						context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
 
 						int days = dayComponent.getDays();
@@ -60,7 +52,7 @@ public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentIni
 				})));
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 				dispatcher.register(CommandManager.literal("add_days").executes(context -> {
-					DAY.maybeGet(context.getSource().getPlayer()).ifPresent(dayComponent -> {
+					ModComponents.DAY.maybeGet(context.getSource().getPlayer()).ifPresent(dayComponent -> {
 
 						dayComponent.setDays(dayComponent.getDays() + 10);
 					});
@@ -125,10 +117,5 @@ public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentIni
 		});
 
 		LOGGER.info("Record Days Survived mod initialized!");
-	}
-
-	@Override
-	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-		registry.registerForPlayers(DAY, playerEntity -> new DayComponent(), RespawnCopyStrategy.LOSSLESS_ONLY);
 	}
 }

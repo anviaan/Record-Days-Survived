@@ -1,8 +1,9 @@
 package net.anvian.record_days_survived.components;
 
+import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.NbtCompound;
 
-public class DayComponent implements Mycomponents{
+public class DayComponent implements Component {
     private int days;
     private int recordDay;
     private long ticksPassed;
