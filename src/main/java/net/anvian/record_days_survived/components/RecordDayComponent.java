@@ -16,4 +16,12 @@ public class RecordDayComponent implements Component {
     public void writeToNbt(NbtCompound tag) {
         tag.putInt("recordDay", recordDay);
     }
+
+    public int getRecordDay() {
+        return recordDay;
+    }
+
+    public void setRecordDay(int amount) {
+        recordDay = amount;
+    }
 }

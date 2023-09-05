@@ -23,4 +23,9 @@ public class DayComponent implements Component {
     public void setDays(int days) {
         this.days = days;
     }
+
+    public void addDays(int amount) {
+        days += amount;
+    }
+
 }

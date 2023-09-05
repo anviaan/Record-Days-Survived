@@ -16,4 +16,16 @@ public class TicksPassedComponent implements Component {
     public void writeToNbt(NbtCompound tag) {
         tag.putLong("ticksPassed", tickPassed);
     }
+
+    public long getTicksPassed() {
+        return tickPassed;
+    }
+
+    public void addTickPassed(long worldTime) {
+        tickPassed = worldTime;
+    }
+
+    public void resetTickPassed(){
+        tickPassed = 1200;
+    }
 }
