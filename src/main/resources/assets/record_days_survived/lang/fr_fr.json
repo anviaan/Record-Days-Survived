@@ -3,5 +3,9 @@
     "report_day": "Jour: %d",
     "report_record_day": "Journée des records: %d",
     "reset": "Vos journées sont réinitialisées",
-    "record_notice": "§eNouvel enregistrement! Les jours ont survécu %d"
+    "record_notice": "§Enew Record! Les jours ont survécu à %d",
+    "set_day": "Les jours ont été fixés à %d",
+    "set_day_with_target": "Les jours de %d ont été fixés à %d",
+    "set_record_day": "La journée record a été fixée à %d",
+    "set_record_day_with_target": "Le jour record de %d a été fixé à %d"
 }

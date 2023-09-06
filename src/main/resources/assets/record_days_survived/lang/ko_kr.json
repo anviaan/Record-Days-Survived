@@ -3,5 +3,9 @@
     "report_day": "낮: %d",
     "report_record_day": "기록적인 날: %d",
     "reset": "당신의 날이 재설정됩니다",
-    "record_notice": "§e새로운 기록! 날이 살아 남았습니다 %d"
+    "record_notice": "§Enew 레코드! 날이 살아 남았습니다. d",
+    "set_day": "날은 %d로 설정되었다",
+    "set_day_with_target": "%d의 일은 %d로 설정되었습니다.",
+    "set_record_day": "레코드 일은 %d로 설정되었다",
+    "set_record_day_with_target": "%d의 레코드 일은 %d로 설정되었습니다."
 }

@@ -67,7 +67,7 @@ public class RecordCommand {
             record.setRecordDay(days);
         }
 
-        Supplier<Text> text = () -> Text.literal("The days were set to " + value);
+        Supplier<Text> text = () -> Text.of(I18n.translate("set_day", value));
         context.getSource().sendFeedback(text, true);
 
         return 1;
@@ -87,7 +87,7 @@ public class RecordCommand {
             record.setRecordDay(days);
         }
 
-        Supplier<Text> text = () -> Text.literal(target.getEntityName() + " days were set to " + value);
+        Supplier<Text> text = () -> Text.of(I18n.translate("set_day_with_target", target.getEntityName(), value));
         context.getSource().sendFeedback(text, true);
 
         return 1;
@@ -99,7 +99,7 @@ public class RecordCommand {
 
         record.setRecordDay(value);
 
-        Supplier<Text> text = () -> Text.literal("The record day were set to " + value);
+        Supplier<Text> text = () -> Text.of(I18n.translate("set_record_day", value));
         context.getSource().sendFeedback(text, true);
 
         return 1;
@@ -112,7 +112,7 @@ public class RecordCommand {
         var record = ModComponents.RECORD_DAY.get(target);
         record.setRecordDay(value);
 
-        Supplier<Text> text = () -> Text.literal(target.getEntityName() + " record day  were set to " + value);
+        Supplier<Text> text = () -> Text.of(I18n.translate("set_record_day_with_target", target.getEntityName(), value));
         context.getSource().sendFeedback(text, true);
 
         return 1;

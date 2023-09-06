@@ -3,5 +3,9 @@
     "report_day": "日：%d",
     "report_record_day": "記録日：%d",
     "reset": "あなたの日はリセットされています",
-    "record_notice": "§e 新記録！ 日が生き残った %d"
+    "record_notice": "§ENEWレコード！ 生き残った日%d",
+    "set_day": "日は%dに設定されました",
+    "set_day_with_target": "%dの日は%dに設定されました",
+    "set_record_day": "記録的な日は%dに設定されました",
+    "set_record_day_with_target": "%dの記録的な日は%dに設定されました"
 }

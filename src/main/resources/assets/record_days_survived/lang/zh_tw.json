@@ -3,5 +3,9 @@
     "report_day": "天：%d",
     "report_record_day": "記錄日：%d",
     "reset": "您的日子是重置的",
-    "record_notice": "§e新紀錄！ 日子倖存下來 %d"
+    "record_notice": "§啟動記錄！ 天生倖存％d",
+    "set_day": "日子設置為％d",
+    "set_day_with_target": "％d的天數設置為％d",
+    "set_record_day": "創紀錄的一天設置為%d",
+    "set_record_day_with_target": "D%d的創紀錄日設置為%d"
 }
