@@ -24,7 +24,6 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Adds a dependency on the base cardinal components module (required by every other module)
 	// Replace modImplementation with modApi if you expose components in your own API
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.2"
 	// Adds a dependency on a specific module
