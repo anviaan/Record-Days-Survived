@@ -1,5 +1,6 @@
 package net.anvian.record_days_survived;
 
+import net.anvian.record_days_survived.command.RecordCommand;
 import net.anvian.record_days_survived.components.ModComponents;
 import net.anvian.record_days_survived.util.DaysData;
 import net.fabricmc.api.ModInitializer;

@@ -1,4 +1,4 @@
-package net.anvian.record_days_survived;
+package net.anvian.record_days_survived.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
