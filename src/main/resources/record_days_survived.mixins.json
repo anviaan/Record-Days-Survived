@@ -3,7 +3,6 @@
 	"package": "net.anvian.record_days_survived.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"DataSaverMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

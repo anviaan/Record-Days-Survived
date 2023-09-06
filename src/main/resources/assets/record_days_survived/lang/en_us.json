@@ -3,5 +3,9 @@
   "report_day" : "Day: %d",
   "report_record_day" : "Record day: %d",
   "reset" : "Your days are reset",
-  "record_notice" : "§eNew record! days survived %d"
+  "record_notice" : "§eNew record! days survived %d",
+  "set_day" : "The days were set to %d",
+  "set_day_with_target" : "The days of %d were set to %d",
+  "set_record_day" : "The record day were set to %d",
+  "set_record_day_with_target" : "The record day of %d were set to %d"
 }

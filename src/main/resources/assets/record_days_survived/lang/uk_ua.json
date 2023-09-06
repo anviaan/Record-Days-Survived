@@ -3,5 +3,9 @@
     "report_day": "День: %d",
     "report_record_day": "День запису: %d",
     "reset": "Ваші дні скидаються",
-    "record_notice": "§eНовий запис! Вижили дні %d"
+    "record_notice": "§Enew Record! дні пережили %d",
+    "set_day": "Дні були встановлені на %d",
+    "set_day_with_target": "Дні %d були встановлені на %d",
+    "set_record_day": "Рекордний день був встановлений на %d",
+    "set_record_day_with_target": "Рекордний день D %d був встановлений на %d"
 }

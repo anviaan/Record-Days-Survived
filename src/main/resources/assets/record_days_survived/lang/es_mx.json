@@ -2,5 +2,9 @@
   "title_report" : "Reporte de días sobrevividos:",
   "report_day" : "Día: %d",
   "report_record_day" : "Record de días: %d",
-  "reset" : "Tus días fueron reiniciados"
+  "reset" : "Tus días fueron reiniciados",
+  "set_day" : "Los días se fijaron a %d",
+  "set_day_with_target" : "Los días de %d se fijaron a %d",
+  "set_record_day" : "El record de días se fijo a %d",
+  "set_record_day_with_target" : "El record de días de %d se fijo a %d"
 }

@@ -1,17 +1,15 @@
 package net.anvian.record_days_survived;
 
+import net.anvian.record_days_survived.command.RecordCommand;
+import net.anvian.record_days_survived.components.ModComponents;
 import net.anvian.record_days_survived.util.DaysData;
-import net.anvian.record_days_survived.util.IEntityDataSaver;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
@@ -19,46 +17,31 @@ import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 public class RecordDaysSurvivedMod implements ModInitializer {
 	public static final String MOD_ID = "record_days_survived";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	private static final long TICKS_PER_DAY = 24000;
 	private static long ticksPassed = 1200;
-	private static final String command = "record_report";
 
 	@Override
 	public void onInitialize() {
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-				dispatcher.register(CommandManager.literal(command).executes(context -> {
-					IEntityDataSaver player = (IEntityDataSaver) context.getSource().getPlayer();
-
-					context.getSource().sendMessage(Text.translatable("title_report").fillStyle(Style.EMPTY.withBold(true)));
-
-                    assert player != null;
-					int days = player.getPersistentData().getInt("days");
-					int recordDay = player.getPersistentData().getInt("recordDay");
-
-                    context.getSource().sendFeedback(Text.of(I18n.translate("report_day", days)), false);
-					context.getSource().sendFeedback(Text.of(I18n.translate("report_record_day", recordDay)), false);
-
-					return 1;
-				})));
+				RecordCommand.register(dispatcher));
 
 		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
 			if (entity instanceof ServerPlayerEntity) {
 				ServerCommandSource source = entity.getCommandSource().withEntity(entity);
 
-				entity.getServer().getCommandManager().executeWithPrefix(source, command);
+				Objects.requireNonNull(entity.getServer()).getCommandManager().executeWithPrefix(source, "record_day report");
 
 			}
 		});
 
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
-			IEntityDataSaver player = (IEntityDataSaver) newPlayer;
-
-			int recordDay = player.getPersistentData().getInt("recordDay");
+			int recordDay = ModComponents.RECORD_DAY.get(newPlayer).getRecordDay();
 
 			newPlayer.sendMessage(Text.translatable("reset").fillStyle(Style.EMPTY.withBold(true)));
 			newPlayer.sendMessage(Text.of(I18n.translate("report_record_day", recordDay)));
@@ -71,13 +54,13 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
 				//one minute has passed
 				if (worldTime % 1200 == 0) {
-					DaysData.addTicksPassed((IEntityDataSaver)player, worldTime);
-					ticksPassed = ((IEntityDataSaver)player).getPersistentData().getLong("ticksPassed");
+					ModComponents.TICKS_PASSED.get(player).addTickPassed(worldTime);
+					ticksPassed = ModComponents.TICKS_PASSED.get(player).getTicksPassed();
 				}
 
 				//one day has passed
-				if (ticksPassed % TICKS_PER_DAY == 0) {
-					DaysData.dayPassed((IEntityDataSaver)player, player);
+				if (ticksPassed % 24000 == 0) {
+					DaysData.dayPassed(player);
 					ticksPassed = 1200;
 				}
 			}
@@ -85,22 +68,8 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
 		EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
 			if (entity instanceof ServerPlayerEntity) {
-				DaysData.dayPassed((IEntityDataSaver)entity, entity);
-				DaysData.resetTicksPassed((IEntityDataSaver)entity);
+				DaysData.dayPassed(entity);
 			}
-		});
-
-		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
-			if (entity instanceof ServerPlayerEntity) {
-				DaysData.resetDays((IEntityDataSaver)entity);
-			}
-		});
-
-		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
-			NbtCompound oldNbt = ((IEntityDataSaver) oldPlayer).getPersistentData();
-			NbtCompound newNbt = ((IEntityDataSaver) newPlayer).getPersistentData();
-
-			newNbt.putInt("recordDay", oldNbt.getInt("recordDay"));
 		});
 
 		LOGGER.info("Record Days Survived mod initialized!");
