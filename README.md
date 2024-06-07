@@ -1,4 +1,5 @@
-![](https://img.shields.io/badge/Fabric-1.19.4-green?style=for-the-badge)![](https://img.shields.io/badge/-1.20.1-green?style=for-the-badge)                 ![](https://img.shields.io/badge/Forge-No-orange?style=for-the-badge)
+![Record day survived title](https://i.imgur.com/zhkKkik.png)
+
 ## **Welcome to 'Record Days Survived'**
 In this unique adventure, your goal is to keep track of how many consecutive days you can survive without succumbing to the dangers of the world.
 

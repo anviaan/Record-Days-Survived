@@ -29,8 +29,8 @@ public class RecordCommand {
                                                 .executes(RecordCommand::setRecordDay)
                                                 .then(CommandManager.argument("target", EntityArgumentType.player())
                                                         .executes(RecordCommand::setRecordDayWithTarget)))
-                        )
-        ));
+                                )
+                        ));
     }
 
     private static int reportDay(CommandContext<ServerCommandSource> context) {
@@ -79,7 +79,7 @@ public class RecordCommand {
             record.setRecordDay(days);
         }
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_day_with_target", target.getEntityName(), value), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_day_with_target", target.getName(), value), true);
 
         return 1;
     }
@@ -102,7 +102,7 @@ public class RecordCommand {
         var record = ModComponents.RECORD_DAY.get(target);
         record.setRecordDay(value);
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target", target.getEntityName(), value), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target", target.getName(), value), true);
 
         return 1;
     }
