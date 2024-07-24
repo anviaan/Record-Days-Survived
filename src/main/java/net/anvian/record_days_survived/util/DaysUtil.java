@@ -1,6 +1,6 @@
 package net.anvian.record_days_survived.util;
 
-import net.anvian.record_days_survived.components.ModComponents;
+import net.anvian.record_days_survived.RecordDaysSurvivedMod;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
@@ -9,9 +9,9 @@ public class DaysUtil {
     public static void dayPassed(LivingEntity entity) {
         int days, recordDay;
 
-        var day = ModComponents.DAY.get(entity);
-        var record = ModComponents.RECORD_DAY.get(entity);
-        var tick = ModComponents.TICKS_PASSED.get(entity);
+        var day = entity.getComponent(RecordDaysSurvivedMod.DAY);
+        var record = entity.getComponent(RecordDaysSurvivedMod.RECORD_DAY);
+        var tick = entity.getComponent(RecordDaysSurvivedMod.TICKS_PASSED);
 
         day.addDays(1);
         tick.resetTickPassed();
@@ -24,7 +24,7 @@ public class DaysUtil {
         }
 
         if (days > recordDay) {
-            ModComponents.RECORD_DAY.get(entity).setRecordDay(days);
+            entity.getComponent(RecordDaysSurvivedMod.RECORD_DAY).setRecordDay(days);
         }
     }
 }

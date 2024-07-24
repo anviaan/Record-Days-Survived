@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.anvian.record_days_survived.components.ModComponents;
+import net.anvian.record_days_survived.RecordDaysSurvivedMod;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
@@ -34,12 +34,10 @@ public class RecordCommand {
     }
 
     private static int reportDay(CommandContext<ServerCommandSource> context) {
-        var day = ModComponents.DAY.get(context.getSource().getPlayer());
-        var record = ModComponents.RECORD_DAY.get(context.getSource().getPlayer());
         context.getSource().sendMessage(Text.translatable("title_report"));
 
-        int days = day.getDays();
-        int recordDay = record.getRecordDay();
+        int days = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.DAY).getDays();
+        int recordDay = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY).getRecordDay();
 
         context.getSource().sendFeedback(() -> Text.translatable("report_day", days), false);
         context.getSource().sendFeedback(() -> Text.translatable("report_record_day", recordDay), false);
@@ -49,8 +47,8 @@ public class RecordCommand {
 
     private static int setDay(CommandContext<ServerCommandSource> context) {
         int value = IntegerArgumentType.getInteger(context, "value");
-        var day = ModComponents.DAY.get(context.getSource().getPlayer());
-        var record = ModComponents.RECORD_DAY.get(context.getSource().getPlayer());
+        var day = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.DAY);
+        var record = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY);
 
         day.setDays(value);
 
@@ -68,8 +66,8 @@ public class RecordCommand {
     private static int setDayWithTarget(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int value = IntegerArgumentType.getInteger(context, "value");
         PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-        var day = ModComponents.DAY.get(target);
-        var record = ModComponents.RECORD_DAY.get(context.getSource().getPlayer());
+        var day = target.getComponent(RecordDaysSurvivedMod.DAY);
+        var record = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY);
 
         day.setDays(value);
 
@@ -86,7 +84,7 @@ public class RecordCommand {
 
     private static int setRecordDay(CommandContext<ServerCommandSource> context) {
         int value = IntegerArgumentType.getInteger(context, "value");
-        var record = ModComponents.RECORD_DAY.get(context.getSource().getPlayer());
+        var record = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY);
 
         record.setRecordDay(value);
 
@@ -99,7 +97,7 @@ public class RecordCommand {
         int value = IntegerArgumentType.getInteger(context, "value");
         PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
 
-        var record = ModComponents.RECORD_DAY.get(target);
+        var record = target.getComponent(RecordDaysSurvivedMod.RECORD_DAY);
         record.setRecordDay(value);
 
         context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target", target.getName(), value), true);
