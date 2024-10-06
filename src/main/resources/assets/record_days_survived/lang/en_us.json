@@ -1,11 +1,12 @@
 {
-  "title_report" : "Survived days report:",
-  "report_day" : "Day: %d",
-  "report_record_day" : "Record day: %d",
-  "reset" : "Your days are reset",
-  "record_notice" : "§eNew record! days survived %d",
-  "set_day" : "The days were set to %d",
-  "set_day_with_target" : "The days of %d were set to %d",
-  "set_record_day" : "The record day were set to %d",
-  "set_record_day_with_target" : "The record day of %d were set to %d"
+  "title_report" : "Survived days report",
+  "report_day" : "Day",
+  "report_record_day" : "Record day",
+  "reset" : "Your days are restarted",
+  "record_notice" : "New record! days survived",
+  "set_day" : "The days were set to",
+  "set_record_day" : "The record day were set to",
+  "set_day_with_target" : "The days of",
+  "set_record_day_with_target" : "The record day of",
+  "were_set_to" : "were set to"
 }

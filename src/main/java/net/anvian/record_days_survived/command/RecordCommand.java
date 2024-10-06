@@ -17,13 +17,13 @@ public class RecordCommand {
     }
 
     private static int reportDay(CommandContext<ServerCommandSource> context) {
-        context.getSource().sendMessage(Text.translatable("title_report"));
+        context.getSource().sendMessage(Text.translatable("title_report").append(": "));
 
         int days = context.getSource().getPlayer().getComponent(ModComponents.DAY).getDays();
         int recordDay = context.getSource().getPlayer().getComponent(ModComponents.RECORD_DAY).getRecordDay();
 
-        context.getSource().sendFeedback(() -> Text.translatable("report_day", days), false);
-        context.getSource().sendFeedback(() -> Text.translatable("report_record_day", recordDay), false);
+        context.getSource().sendFeedback(() -> Text.translatable("report_day").append(": ").append(String.valueOf(days)), false);
+        context.getSource().sendFeedback(() -> Text.translatable("report_record_day").append(": ").append(String.valueOf(recordDay)), false);
 
         return 1;
     }
@@ -41,7 +41,7 @@ public class RecordCommand {
             record.setRecordDay(days);
         }
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_day", value), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_day").append(" ").append(String.valueOf(value)), true);
 
         return 1;
     }
@@ -60,7 +60,7 @@ public class RecordCommand {
             record.setRecordDay(days);
         }
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_day_with_target", target.getName(), value), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_day_with_target").append(" ").append(target.getName()).append(" ").append("were_set_to").append(" ").append(String.valueOf(value)), true);
 
         return 1;
     }
@@ -71,7 +71,7 @@ public class RecordCommand {
 
         record.setRecordDay(value);
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_record_day", value), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_record_day").append(" ").append(String.valueOf(value)), true);
 
         return 1;
     }
@@ -83,7 +83,7 @@ public class RecordCommand {
         var record = target.getComponent(ModComponents.RECORD_DAY);
         record.setRecordDay(value);
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target", target.getName(), value), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target").append(" ").append(target.getName()).append(" ").append("were_set_to").append(" ").append(String.valueOf(value)), true);
 
         return 1;
     }

@@ -1,11 +1,12 @@
 {
-    "title_report": "살아남은 날 보고서 :",
-    "report_day": "낮: %d",
-    "report_record_day": "기록적인 날: %d",
-    "reset": "당신의 날이 재설정됩니다",
-    "record_notice": "§Enew 레코드! 날이 살아 남았습니다. d",
-    "set_day": "날은 %d로 설정되었다",
-    "set_day_with_target": "%d의 일은 %d로 설정되었습니다.",
-    "set_record_day": "레코드 일은 %d로 설정되었다",
-    "set_record_day_with_target": "%d의 레코드 일은 %d로 설정되었습니다."
+    "title_report": "생존일 보고서",
+    "report_day": "낮",
+    "report_record_day": "기록의 날",
+    "reset": "당신의 하루가 다시 시작됩니다",
+    "record_notice": "새로운 기록! 며칠 남았습니다",
+    "set_day": "날짜는 다음과 같이 설정되었습니다.",
+    "set_record_day": "기록의 날은 다음과 같이 설정되었습니다.",
+    "set_day_with_target": "의 날들",
+    "set_record_day_with_target": "기록의 날",
+    "were_set_to": "설정되었다"
 }

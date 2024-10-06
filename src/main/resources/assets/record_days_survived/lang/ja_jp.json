@@ -1,11 +1,12 @@
 {
-    "title_report": "生き残った日々の報告：",
-    "report_day": "日：%d",
-    "report_record_day": "記録日：%d",
-    "reset": "あなたの日はリセットされています",
-    "record_notice": "§ENEWレコード！ 生き残った日%d",
-    "set_day": "日は%dに設定されました",
-    "set_day_with_target": "%dの日は%dに設定されました",
-    "set_record_day": "記録的な日は%dに設定されました",
-    "set_record_day_with_target": "%dの記録的な日は%dに設定されました"
+    "title_report": "生存日数レポート",
+    "report_day": "日",
+    "report_record_day": "記録の日",
+    "reset": "あなたの日々は再開されます",
+    "record_notice": "新記録！生き残った日数",
+    "set_day": "日程は",
+    "set_record_day": "記録的な日は",
+    "set_day_with_target": "の日々",
+    "set_record_day_with_target": "記録的な日",
+    "were_set_to": "設定された"
 }

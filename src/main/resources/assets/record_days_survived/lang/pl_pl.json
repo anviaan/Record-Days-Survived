@@ -1,0 +1,12 @@
+{
+    "title_report": "Raport o dniach przetrwania",
+    "report_day": "Dzień",
+    "report_record_day": "Dzień rekordowy",
+    "reset": "Twoje dni zaczynają się od nowa",
+    "record_notice": "Nowy rekord! dni przetrwały",
+    "set_day": "Dni zostały ustawione na",
+    "set_record_day": "Dzień rekordu został ustalony na",
+    "set_day_with_target": "Dni",
+    "set_record_day_with_target": "Dzień rekordowy",
+    "were_set_to": "zostały ustawione na"
+}

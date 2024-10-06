@@ -1,11 +1,12 @@
 {
-    "title_report": "生存的日子報告：",
-    "report_day": "天：%d",
-    "report_record_day": "記錄日：%d",
-    "reset": "您的日子是重置的",
-    "record_notice": "§啟動記錄！ 天生倖存％d",
-    "set_day": "日子設置為％d",
-    "set_day_with_target": "％d的天數設置為％d",
-    "set_record_day": "創紀錄的一天設置為%d",
-    "set_record_day_with_target": "D%d的創紀錄日設置為%d"
+    "title_report": "生存天數報告",
+    "report_day": "天",
+    "report_record_day": "記錄日",
+    "reset": "你的日子又重新開始了",
+    "record_notice": "新紀錄！倖存天數",
+    "set_day": "日子定為",
+    "set_record_day": "記錄日定為",
+    "set_day_with_target": "的日子",
+    "set_record_day_with_target": "記錄日為",
+    "were_set_to": "被設定為"
 }

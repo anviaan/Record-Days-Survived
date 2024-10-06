@@ -1,11 +1,12 @@
 {
-    "title_report": "Relatório de dias sobrevividos:",
-    "report_day": "Dia: %d",
-    "report_record_day": "Dia do registro: %d",
-    "reset": "Seus dias são redefinidos",
-    "record_notice": "§ Registro! dias sobreviveram %d",
-    "set_day": "Os dias foram definidos como %d",
-    "set_day_with_target": "Os dias de %d foram definidos como %d",
-    "set_record_day": "O dia recorde foi definido como %d",
-    "set_record_day_with_target": "O dia recorde de %d foi definido como %d"
+    "title_report": "Relatório de dias sobrevividos",
+    "report_day": "Dia",
+    "report_record_day": "Dia do recorde",
+    "reset": "Seus dias são reiniciados",
+    "record_notice": "Novo recorde! dias sobrevivido",
+    "set_day": "Os dias foram definidos para",
+    "set_record_day": "O dia recorde foi definido para",
+    "set_day_with_target": "Os dias de",
+    "set_record_day_with_target": "O dia recorde de",
+    "were_set_to": "foram definidos para"
 }

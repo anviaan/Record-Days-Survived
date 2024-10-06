@@ -1,11 +1,12 @@
 {
-    "title_report": "Отчет о выживших днях:",
-    "report_day": "День: %d",
-    "report_record_day": "Запись день: %d",
-    "reset": "Ваши дни сброшены",
-    "record_notice": "§Enew record! Дни выжили %d",
-    "set_day": "Дни были установлены в %d",
-    "set_day_with_target": "Дни %D были установлены в %d",
-    "set_record_day": "Рекордный день был установлен в %d",
-    "set_record_day_with_target": "Рекорд День %D был установлен в %d"
+    "title_report": "Отчет о выживших днях",
+    "report_day": "День",
+    "report_record_day": "Рекордный день",
+    "reset": "Ваши дни начинаются заново.",
+    "record_notice": "Новый рекорд! дней выжили",
+    "set_day": "Дни были установлены",
+    "set_record_day": "Рекордный день был установлен",
+    "set_day_with_target": "Дни",
+    "set_record_day_with_target": "Рекордный день",
+    "were_set_to": "были установлены на"
 }
