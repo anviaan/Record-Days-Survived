@@ -19,7 +19,7 @@
 		"main": [
 			"net.anvian.record_days_survived.RecordDaysSurvivedMod"
 		],
-		"cardinal_components-entity": [
+		"cardinal-components-entity": [
 			"net.anvian.record_days_survived.RecordDaysSurvivedMod"
 		]
 	},
