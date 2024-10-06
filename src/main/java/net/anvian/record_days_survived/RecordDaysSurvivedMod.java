@@ -95,5 +95,4 @@ public class RecordDaysSurvivedMod implements ModInitializer, EntityComponentIni
         registry.registerForPlayers(RECORD_DAY, RecordDayComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         registry.registerForPlayers(TICKS_PASSED, TicksPassedComponent::new, RespawnCopyStrategy.NEVER_COPY);
     }
-
 }
