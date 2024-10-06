@@ -60,7 +60,7 @@ public class RecordCommand {
             record.setRecordDay(days);
         }
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_day_with_target").append(" ").append(target.getName()).append(" ").append("were_set_to").append(" ").append(String.valueOf(value)), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_day_with_target").append(" ").append(target.getName()).append(" ").append(Text.translatable("were_set_to")).append(" ").append(String.valueOf(value)), true);
 
         return 1;
     }
@@ -83,7 +83,7 @@ public class RecordCommand {
         var record = target.getComponent(ModComponents.RECORD_DAY);
         record.setRecordDay(value);
 
-        context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target").append(" ").append(target.getName()).append(" ").append("were_set_to").append(" ").append(String.valueOf(value)), true);
+        context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target").append(" ").append(target.getName()).append(" ").append(Text.translatable("were_set_to")).append(" ").append(String.valueOf(value)), true);
 
         return 1;
     }
