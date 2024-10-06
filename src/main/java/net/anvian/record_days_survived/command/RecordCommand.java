@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.anvian.record_days_survived.RecordDaysSurvivedMod;
+import net.anvian.record_days_survived.components.ModComponents;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
@@ -13,31 +13,14 @@ import net.minecraft.text.Text;
 
 public class RecordCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(
-                CommandManager.literal("record_day")
-                        .then(CommandManager.literal("report")
-                                .executes(RecordCommand::reportDay))
-                        .then(CommandManager.literal("set").requires(source -> source.hasPermissionLevel(2))
-                                .then(CommandManager.literal("day")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(RecordCommand::setDay)
-                                                .then(CommandManager.argument("target", EntityArgumentType.player())
-                                                        .executes(RecordCommand::setDayWithTarget)))
-                                )
-                                .then(CommandManager.literal("record")
-                                        .then(CommandManager.argument("value", IntegerArgumentType.integer())
-                                                .executes(RecordCommand::setRecordDay)
-                                                .then(CommandManager.argument("target", EntityArgumentType.player())
-                                                        .executes(RecordCommand::setRecordDayWithTarget)))
-                                )
-                        ));
+        dispatcher.register(CommandManager.literal("record_day").then(CommandManager.literal("report").executes(RecordCommand::reportDay)).then(CommandManager.literal("set").requires(source -> source.hasPermissionLevel(2)).then(CommandManager.literal("day").then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(RecordCommand::setDay).then(CommandManager.argument("target", EntityArgumentType.player()).executes(RecordCommand::setDayWithTarget)))).then(CommandManager.literal("record").then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(RecordCommand::setRecordDay).then(CommandManager.argument("target", EntityArgumentType.player()).executes(RecordCommand::setRecordDayWithTarget))))));
     }
 
     private static int reportDay(CommandContext<ServerCommandSource> context) {
         context.getSource().sendMessage(Text.translatable("title_report"));
 
-        int days = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.DAY).getDays();
-        int recordDay = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY).getRecordDay();
+        int days = context.getSource().getPlayer().getComponent(ModComponents.DAY).getDays();
+        int recordDay = context.getSource().getPlayer().getComponent(ModComponents.RECORD_DAY).getRecordDay();
 
         context.getSource().sendFeedback(() -> Text.translatable("report_day", days), false);
         context.getSource().sendFeedback(() -> Text.translatable("report_record_day", recordDay), false);
@@ -47,14 +30,14 @@ public class RecordCommand {
 
     private static int setDay(CommandContext<ServerCommandSource> context) {
         int value = IntegerArgumentType.getInteger(context, "value");
-        var day = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.DAY);
-        var record = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY);
+        var day = context.getSource().getPlayer().getComponent(ModComponents.DAY);
+        var record = context.getSource().getPlayer().getComponent(ModComponents.RECORD_DAY);
 
         day.setDays(value);
 
         int days = day.getDays();
         int recordDay = record.getRecordDay();
-        if (days > recordDay){
+        if (days > recordDay) {
             record.setRecordDay(days);
         }
 
@@ -66,14 +49,14 @@ public class RecordCommand {
     private static int setDayWithTarget(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int value = IntegerArgumentType.getInteger(context, "value");
         PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
-        var day = target.getComponent(RecordDaysSurvivedMod.DAY);
-        var record = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY);
+        var day = target.getComponent(ModComponents.DAY);
+        var record = context.getSource().getPlayer().getComponent(ModComponents.RECORD_DAY);
 
         day.setDays(value);
 
         int days = day.getDays();
         int recordDay = record.getRecordDay();
-        if (days > recordDay){
+        if (days > recordDay) {
             record.setRecordDay(days);
         }
 
@@ -84,7 +67,7 @@ public class RecordCommand {
 
     private static int setRecordDay(CommandContext<ServerCommandSource> context) {
         int value = IntegerArgumentType.getInteger(context, "value");
-        var record = context.getSource().getPlayer().getComponent(RecordDaysSurvivedMod.RECORD_DAY);
+        var record = context.getSource().getPlayer().getComponent(ModComponents.RECORD_DAY);
 
         record.setRecordDay(value);
 
@@ -97,7 +80,7 @@ public class RecordCommand {
         int value = IntegerArgumentType.getInteger(context, "value");
         PlayerEntity target = EntityArgumentType.getPlayer(context, "target");
 
-        var record = target.getComponent(RecordDaysSurvivedMod.RECORD_DAY);
+        var record = target.getComponent(ModComponents.RECORD_DAY);
         record.setRecordDay(value);
 
         context.getSource().sendFeedback(() -> Text.translatable("set_record_day_with_target", target.getName(), value), true);

@@ -1,45 +1,45 @@
 {
-	"schemaVersion": 1,
-	"id": "record_days_survived",
-	"version": "${version}",
-	"name": "Record Days Survived",
-	"description": "This Minecraft mod challenges you to keep track of how many days you survive without dying - can you reach a record number of days alive before falling to the dangers of the world?",
-	"authors": [
-		"anvian"
-	],
-	"contact": {
-		"homepage": "https://modrinth.com/mod/record-days-survived",
-		"sources": "https://github.com/anviaan/Record-Days-Survived",
-		"issues": "https://github.com/anviaan/Record-Days-Survived/issues"
-	},
-	"license": "GPL-3.0",
-	"icon": "icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"net.anvian.record_days_survived.RecordDaysSurvivedMod"
-		],
-		"cardinal-components-entity": [
-			"net.anvian.record_days_survived.RecordDaysSurvivedMod"
-		]
-	},
-	"mixins": [
-		"record_days_survived.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.15.11",
-		"minecraft": "~1.20.6",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
-	},
-	"custom" : {
-		"cardinal-components": [
-			"record_days_survived:days",
-			"record_days_survived:record_day",
-			"record_days_survived:ticks_passed"
-		]
-	}
+  "schemaVersion": 1,
+  "id": "record_days_survived",
+  "version": "${version}",
+  "name": "Record Days Survived",
+  "description": "This Minecraft mod challenges you to keep track of how many days you survive without dying - can you reach a record number of days alive before falling to the dangers of the world?",
+  "authors": [
+    "anvian"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/record-days-survived",
+    "sources": "https://github.com/anviaan/Record-Days-Survived",
+    "issues": "https://github.com/anviaan/Record-Days-Survived/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.anvian.record_days_survived.RecordDaysSurvivedMod"
+    ],
+    "cardinal-components-entity": [
+      "net.anvian.record_days_survived.components.ModComponents"
+    ]
+  },
+  "mixins": [
+    "record_days_survived.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.20.6",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "record_days_survived:days",
+      "record_days_survived:record_day",
+      "record_days_survived:ticks_passed"
+    ]
+  }
 }
