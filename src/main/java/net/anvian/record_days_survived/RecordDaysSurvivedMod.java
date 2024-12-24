@@ -7,17 +7,13 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Objects;
 
 public class RecordDaysSurvivedMod implements ModInitializer {
     public static final String MOD_ID = "record_days_survived";
@@ -27,16 +23,9 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        LOGGER.info("Record Days Survived mod initialized!");
+
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> RecordCommand.register(dispatcher));
-
-        ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
-            if (entity instanceof PlayerEntity) {
-                ServerCommandSource source = entity.getCommandSource().withEntity(entity);
-
-                Objects.requireNonNull(entity.getServer()).getCommandManager().executeWithPrefix(source, "record_day report");
-
-            }
-        });
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             int recordDay = newPlayer.getComponent(ModComponents.RECORD_DAY).getRecordDay();
@@ -69,7 +58,5 @@ public class RecordDaysSurvivedMod implements ModInitializer {
                 DaysUtil.dayPassed(entity);
             }
         });
-
-        LOGGER.info("Record Days Survived mod initialized!");
     }
 }

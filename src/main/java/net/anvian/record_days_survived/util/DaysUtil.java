@@ -2,6 +2,7 @@ package net.anvian.record_days_survived.util;
 
 import net.anvian.record_days_survived.components.ModComponents;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -20,7 +21,7 @@ public class DaysUtil {
         recordDay = record.getRecordDay();
 
         if (days == 5 || days % 10 == 0) {
-            entity.sendMessage(Text.translatable("record_notice").append(" ").append(String.valueOf(days)).formatted(Formatting.YELLOW));
+            ((PlayerEntity) entity).sendMessage(Text.translatable("record_notice").append(" ").append(String.valueOf(days)).formatted(Formatting.YELLOW), false);
         }
 
         if (days > recordDay) {

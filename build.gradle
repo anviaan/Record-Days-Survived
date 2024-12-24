@@ -1,6 +1,16 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
-	id 'maven-publish'
+	id 'fabric-loom' version '1.8-SNAPSHOT'
+}
+
+def COMPATIBLE_VERSIONS = ['1.21.2', '1.22']
+
+tasks.register("printEnv") {
+	doLast {
+		def envFile = new File(System.getenv("GITHUB_ENV"))
+		envFile.append("MOD_VERSION=${project.mod_version}\n")
+		envFile.append("RELEASE_NAME=${project.archives_base_name}-${project.mod_version}\n")
+		envFile.append("GAME_VERSIONS=${COMPATIBLE_VERSIONS}\n")
+	}
 }
 
 version = project.mod_version
@@ -56,17 +66,5 @@ java {
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
-	}
-}
-
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
-			from components.java
-		}
-	}
-
-	repositories {
 	}
 }
