@@ -1,8 +1,8 @@
 plugins {
-	id 'fabric-loom' version '1.8-SNAPSHOT'
+	id 'fabric-loom' version '1.10-SNAPSHOT'
 }
 
-def COMPATIBLE_VERSIONS = ['1.21.2', '1.22']
+def COMPATIBLE_VERSIONS = ['1.21.6', '1.22']
 
 tasks.register("printEnv") {
 	doLast {
@@ -29,6 +29,10 @@ repositories {
 		name = "Terraformers"
 		url = "https://maven.terraformersmc.com/"
 	}
+	maven {
+		name = "Repsy Anvian"
+		url = uri("https://repo.repsy.io/mvn/anvian/anvians-lib")
+	}
 }
 
 dependencies {
@@ -42,6 +46,7 @@ dependencies {
 	modImplementation include ("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 
 	modLocalRuntime("com.terraformersmc:modmenu:${project.modmenu_version}")
+	modImplementation("net.anvian.anvianslib:anvianslib-fabric-1.21.6:${project.anvianslib_version}")
 }
 
 processResources {

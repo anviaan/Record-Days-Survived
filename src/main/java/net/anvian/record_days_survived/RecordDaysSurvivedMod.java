@@ -1,5 +1,6 @@
 package net.anvian.record_days_survived;
 
+import net.anvian.anvianslib.util.LibUtil;
 import net.anvian.record_days_survived.command.RecordCommand;
 import net.anvian.record_days_survived.components.ModComponents;
 import net.anvian.record_days_survived.util.DaysUtil;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class RecordDaysSurvivedMod implements ModInitializer {
     public static final String MOD_ID = "record_days_survived";
+    public static final String MOD_VERSION = "2.3";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     private static long ticksPassed = 1200;
@@ -24,6 +26,8 @@ public class RecordDaysSurvivedMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Record Days Survived mod initialized!");
+
+        LibUtil.setupTelemetry(MOD_ID, MOD_VERSION);
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> RecordCommand.register(dispatcher));
 

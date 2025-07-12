@@ -1,8 +1,8 @@
 package net.anvian.record_days_survived.components;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.ladysnake.cca.api.v3.component.Component;
 
 public class RecordDayComponent implements Component {
@@ -15,13 +15,13 @@ public class RecordDayComponent implements Component {
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        recordDay = tag.getInt("recordDay");
+    public void readData(ReadView readView) {
+        recordDay = readView.getInt("recordDay", 0);
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        tag.putInt("recordDay", recordDay);
+    public void writeData(WriteView writeView) {
+        writeView.putInt("recordDay", recordDay);
     }
 
     public int getRecordDay() {

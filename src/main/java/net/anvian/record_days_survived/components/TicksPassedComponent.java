@@ -1,8 +1,8 @@
 package net.anvian.record_days_survived.components;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.ladysnake.cca.api.v3.component.Component;
 
 public class TicksPassedComponent implements Component {
@@ -15,13 +15,13 @@ public class TicksPassedComponent implements Component {
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        ticksPassed = tag.getLong("ticksPassed");
+    public void readData(ReadView readView) {
+        ticksPassed = readView.getLong("ticksPassed", 1200);
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        tag.putLong("ticksPassed", ticksPassed);
+    public void writeData(WriteView writeView) {
+        writeView.putLong("ticksPassed", ticksPassed);
     }
 
     public long getTicksPassed() {
