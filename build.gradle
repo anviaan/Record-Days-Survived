@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 }
 
 def COMPATIBLE_VERSIONS = ['1.21.6', '1.22']
