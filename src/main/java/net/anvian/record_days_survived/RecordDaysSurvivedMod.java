@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -33,9 +32,11 @@ public class RecordDaysSurvivedMod implements ModInitializer {
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             int recordDay = newPlayer.getComponent(ModComponents.RECORD_DAY).getRecordDay();
+            int daysSurvived = newPlayer.getComponent(ModComponents.DAY).getDays();
 
             newPlayer.sendMessage(Text.translatable("reset").fillStyle(Style.EMPTY.withBold(true)));
-            newPlayer.sendMessage(Text.of(I18n.translate("report_record_day", recordDay)));
+            newPlayer.sendMessage(Text.translatable("report_record_day").append(": " + recordDay));
+            newPlayer.sendMessage(Text.translatable("days_survived").append(": " + daysSurvived));
         });
 
         ServerTickEvents.START_SERVER_TICK.register((server -> {
