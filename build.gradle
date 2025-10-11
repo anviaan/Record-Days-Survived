@@ -2,7 +2,7 @@ plugins {
 	id 'fabric-loom' version '1.11-SNAPSHOT'
 }
 
-def COMPATIBLE_VERSIONS = ['1.21.6', '1.22']
+def COMPATIBLE_VERSIONS = ['1.21.9', '1.22']
 
 tasks.register("printEnv") {
 	doLast {
@@ -46,7 +46,7 @@ dependencies {
 	modImplementation include ("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 
 	modLocalRuntime("com.terraformersmc:modmenu:${project.modmenu_version}")
-	modImplementation("net.anvian.anvianslib:anvianslib-fabric-1.21.6:${project.anvianslib_version}")
+	modImplementation("net.anvian.anvianslib:anvianslib-fabric-1.21.10:${project.anvianslib_version}")
 }
 
 processResources {
