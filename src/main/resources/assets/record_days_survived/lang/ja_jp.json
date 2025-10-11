@@ -1,12 +1,13 @@
 {
     "title_report": "生存日数レポート",
     "report_day": "日",
-    "report_record_day": "記録の日",
-    "reset": "あなたの日々は再開されます",
+    "report_record_day": "記録日",
+    "reset": "あなたの日々が再スタートします",
     "record_notice": "新記録！生き残った日数",
-    "set_day": "日程は",
-    "set_record_day": "記録的な日は",
+    "set_day": "曜日は次のように設定されました",
+    "set_record_day": "記録日は次のように設定されました。",
     "set_day_with_target": "の日々",
-    "set_record_day_with_target": "記録的な日",
-    "were_set_to": "設定された"
+    "set_record_day_with_target": "記録の日",
+    "were_set_to": "に設定されました",
+    "days_survived": "生存日数"
 }

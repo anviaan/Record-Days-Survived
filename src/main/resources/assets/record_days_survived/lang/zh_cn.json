@@ -1,12 +1,13 @@
 {
-    "title_report": "存活天数报告",
+    "title_report": "生存天数报告",
     "report_day": "天",
-    "report_record_day": "纪录日",
-    "reset": "你的日子重新开始",
-    "record_notice": "新纪录！存活天数",
-    "set_day": "日期定为",
-    "set_record_day": "创纪录的日子定于",
-    "set_day_with_target": "的日子",
-    "set_record_day_with_target": "创纪录的一天",
-    "were_set_to": "被设置为"
+    "report_record_day": "记录日",
+    "reset": "你的日子又重新开始了",
+    "record_notice": "新纪录！幸存天数",
+    "set_day": "日子定为",
+    "set_record_day": "记录日定为",
+    "set_day_with_target": "那些日子",
+    "set_record_day_with_target": "记录日为",
+    "were_set_to": "被设置为",
+    "days_survived": "生存天数"
 }

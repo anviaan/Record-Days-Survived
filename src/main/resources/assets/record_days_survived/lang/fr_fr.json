@@ -1,12 +1,13 @@
 {
-    "title_report": "Rapport des jours de survie",
+    "title_report": "Rapport sur les jours de survie",
     "report_day": "Jour",
     "report_record_day": "Journée record",
-    "reset": "Vos jours recommencent",
-    "record_notice": "Nouveau record ! jours survécus",
-    "set_day": "Les jours étaient fixés à",
-    "set_record_day": "Le jour du record a été fixé à",
+    "reset": "Vos journées recommencent",
+    "record_notice": "Nouveau disque ! jours survécus",
+    "set_day": "Les jours étaient fixés pour",
+    "set_record_day": "La journée record était fixée à",
     "set_day_with_target": "Les jours de",
-    "set_record_day_with_target": "Le jour du record de",
-    "were_set_to": "étaient prêts à"
+    "set_record_day_with_target": "La journée record de",
+    "were_set_to": "étaient fixés à",
+    "days_survived": "Jours survécus"
 }

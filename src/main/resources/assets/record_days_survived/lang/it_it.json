@@ -1,12 +1,13 @@
 {
-    "title_report": "Rapporto dei giorni sopravvissuti",
+    "title_report": "Rapporto sui giorni sopravvissuti",
     "report_day": "Giorno",
-    "report_record_day": "Giorno del record",
-    "reset": "I tuoi giorni ricominciano",
-    "record_notice": "Nuovo record! Giorni sopravvissuti",
-    "set_day": "I giorni erano stabiliti per",
-    "set_record_day": "Il giorno record è stato fissato per",
+    "report_record_day": "Giornata da record",
+    "reset": "Le tue giornate ricominciano",
+    "record_notice": "Nuovo record! i giorni sopravvissero",
+    "set_day": "I giorni erano fissati",
+    "set_record_day": "Il giorno dei record era fissato",
     "set_day_with_target": "I giorni di",
-    "set_record_day_with_target": "Il giorno record di",
-    "were_set_to": "erano impostati su"
+    "set_record_day_with_target": "Il giorno dei record di",
+    "were_set_to": "erano impostati su",
+    "days_survived": "Giorni sopravvissuti"
 }

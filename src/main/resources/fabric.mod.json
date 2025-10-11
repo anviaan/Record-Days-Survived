@@ -27,8 +27,8 @@
     "record_days_survived.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.9",
-    "minecraft": ">=1.21.2",
+    "fabricloader": ">=0.17.3",
+    "minecraft": ">=1.21.9",
     "java": ">=21",
     "fabric-api": "*",
     "anvianslib": ">=1.2"

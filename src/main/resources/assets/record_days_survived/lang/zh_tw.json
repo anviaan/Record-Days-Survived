@@ -6,7 +6,8 @@
     "record_notice": "新紀錄！倖存天數",
     "set_day": "日子定為",
     "set_record_day": "記錄日定為",
-    "set_day_with_target": "的日子",
+    "set_day_with_target": "那些日子",
     "set_record_day_with_target": "記錄日為",
-    "were_set_to": "被設定為"
+    "were_set_to": "被設置為",
+    "days_survived": "生存天數"
 }

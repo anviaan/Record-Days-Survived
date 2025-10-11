@@ -1,12 +1,13 @@
 {
-    "title_report": "Bericht über überlebte Tage",
+    "title_report": "Bericht über die überlebten Tage",
     "report_day": "Tag",
     "report_record_day": "Rekordtag",
-    "reset": "Deine Tage beginnen von Neuem",
+    "reset": "Ihre Tage werden neu gestartet",
     "record_notice": "Neuer Rekord! Tage überlebt",
-    "set_day": "Die Tage waren festgelegt auf",
-    "set_record_day": "Der Rekordtag war angesetzt auf",
+    "set_day": "Die Tage waren festgelegt",
+    "set_record_day": "Der Rekordtag wurde festgelegt",
     "set_day_with_target": "Die Tage von",
     "set_record_day_with_target": "Der Rekordtag von",
-    "were_set_to": "waren eingestellt auf"
+    "were_set_to": "wurden eingestellt",
+    "days_survived": "Tage überlebt"
 }

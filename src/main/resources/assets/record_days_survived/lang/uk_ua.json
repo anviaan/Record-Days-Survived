@@ -1,12 +1,13 @@
 {
-    "title_report": "Звіт про пережиті дні",
+    "title_report": "Вижили Дні звіту",
     "report_day": "День",
-    "report_record_day": "Рекордний день",
-    "reset": "Ваші дні починаються знову",
-    "record_notice": "Новий рекорд! днів пережив",
-    "set_day": "Дні були встановлені",
-    "set_record_day": "Рекордний день був встановлений",
+    "report_record_day": "Записний день",
+    "reset": "Ваші дні перезапускаються",
+    "record_notice": "Новий запис! Вижили дні",
+    "set_day": "Дні були встановлені на",
+    "set_record_day": "День рекордів був встановлений на",
     "set_day_with_target": "Дні",
-    "set_record_day_with_target": "Рекордний день",
-    "were_set_to": "були встановлені"
+    "set_record_day_with_target": "День рекорду",
+    "were_set_to": "були встановлені",
+    "days_survived": "Вижили дні"
 }

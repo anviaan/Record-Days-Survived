@@ -1,12 +1,13 @@
 {
     "title_report": "Informe de días sobrevividos",
     "report_day": "Día",
-    "report_record_day": "Día de récord",
+    "report_record_day": "Día récord",
     "reset": "Tus días se reinician",
     "record_notice": "¡Nuevo récord! Días sobrevividos",
     "set_day": "Los días estaban fijados para",
-    "set_record_day": "El día récord se estableció",
-    "set_day_with_target": "Los dias de",
+    "set_record_day": "El día récord se fijó en",
+    "set_day_with_target": "los dias de",
     "set_record_day_with_target": "El día récord de",
-    "were_set_to": "Se establecieron para"
+    "were_set_to": "Se establecieron para",
+    "days_survived": "Días sobrevividos"
 }
