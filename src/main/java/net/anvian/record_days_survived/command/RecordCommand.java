@@ -6,6 +6,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.anvian.record_days_survived.components.ModComponents;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.permission.Permission;
+import net.minecraft.command.permission.PermissionLevel;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -13,7 +15,16 @@ import net.minecraft.text.Text;
 
 public class RecordCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("record_day").then(CommandManager.literal("report").executes(RecordCommand::reportDay)).then(CommandManager.literal("set").requires(source -> source.hasPermissionLevel(2)).then(CommandManager.literal("day").then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(RecordCommand::setDay).then(CommandManager.argument("target", EntityArgumentType.player()).executes(RecordCommand::setDayWithTarget)))).then(CommandManager.literal("record").then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(RecordCommand::setRecordDay).then(CommandManager.argument("target", EntityArgumentType.player()).executes(RecordCommand::setRecordDayWithTarget))))));
+        dispatcher.register(
+                CommandManager.literal("record_day")
+                        .then(CommandManager.literal("report").executes(RecordCommand::reportDay))
+                        .then(CommandManager.literal("set").requires(source -> source.getPermissions().hasPermission(new Permission.Level(PermissionLevel.GAMEMASTERS)))
+                                .then(CommandManager.literal("day")
+                                        .then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(RecordCommand::setDay)
+                                                .then(CommandManager.argument("target", EntityArgumentType.player()).executes(RecordCommand::setDayWithTarget))))
+                                .then(CommandManager.literal("record")
+                                        .then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(RecordCommand::setRecordDay)
+                                                .then(CommandManager.argument("target", EntityArgumentType.player()).executes(RecordCommand::setRecordDayWithTarget))))));
     }
 
     private static int reportDay(CommandContext<ServerCommandSource> context) {

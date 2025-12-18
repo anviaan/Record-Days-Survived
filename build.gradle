@@ -1,8 +1,8 @@
 plugins {
-	id 'fabric-loom' version '1.11-SNAPSHOT'
+	id 'fabric-loom' version '1.14-SNAPSHOT'
 }
 
-def COMPATIBLE_VERSIONS = ['1.21.9', '1.22']
+def COMPATIBLE_VERSIONS = ['1.21.11', '1.22']
 
 tasks.register("printEnv") {
 	doLast {
