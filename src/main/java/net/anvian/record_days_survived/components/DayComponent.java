@@ -1,27 +1,27 @@
 package net.anvian.record_days_survived.components;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import org.ladysnake.cca.api.v3.component.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
-public class DayComponent implements Component {
-    private final PlayerEntity player;
+public class DayComponent implements CardinalComponent {
+    private final Player player;
     private int days;
 
-    public DayComponent(PlayerEntity player) {
+    public DayComponent(Player player) {
         this.player = player;
         days = 0;
     }
 
     @Override
-    public void readData(ReadView readView) {
-        days = readView.getInt("days", 0);
+    public void readData(ValueInput input) {
+        days = input.getIntOr("days", 0);
     }
 
     @Override
-    public void writeData(WriteView writeView) {
-        writeView.putInt("days", days);
+    public void writeData(ValueOutput output) {
+        output.putInt("days", days);
     }
 
     public int getDays() {

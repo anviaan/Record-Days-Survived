@@ -1,27 +1,27 @@
 package net.anvian.record_days_survived.components;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import org.ladysnake.cca.api.v3.component.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
-public class TicksPassedComponent implements Component {
-    private final PlayerEntity player;
+public class TicksPassedComponent implements CardinalComponent {
+    private final Player player;
     private long ticksPassed;
 
-    public TicksPassedComponent(PlayerEntity player) {
+    public TicksPassedComponent(Player player) {
         this.player = player;
         this.ticksPassed = 1200;
     }
 
     @Override
-    public void readData(ReadView readView) {
-        ticksPassed = readView.getLong("ticksPassed", 1200);
+    public void readData(ValueInput input) {
+        ticksPassed = input.getLongOr("ticksPassed", 1200);
     }
 
     @Override
-    public void writeData(WriteView writeView) {
-        writeView.putLong("ticksPassed", ticksPassed);
+    public void writeData(ValueOutput output) {
+        output.putLong("ticksPassed", ticksPassed);
     }
 
     public long getTicksPassed() {
